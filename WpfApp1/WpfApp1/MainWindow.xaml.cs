@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ModelLibrary.Models.Data;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +24,9 @@ namespace WpfApp1
 		public MainWindow()
 		{
 			InitializeComponent();
+
+			using (VacationManagerContext dbContext = new VacationManagerContext())
+				itemsGrid.ItemsSource = dbContext.Users.ToList();
 		}
 	}
 }
