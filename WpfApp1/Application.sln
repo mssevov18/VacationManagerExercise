@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.3.32922.545
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WpfApp1", "WpfApp1\WpfApp1.csproj", "{58053BA4-7083-48AF-9B27-5F40F09C62F1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Application", "WpfApp1\Application.csproj", "{58053BA4-7083-48AF-9B27-5F40F09C62F1}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ModelLibrary", "..\VacationManagerModelLibrary\ModelLibrary\ModelLibrary\ModelLibrary.csproj", "{37451DB0-0144-4544-AE3C-36C2A61DEC1E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{58053BA4-7083-48AF-9B27-5F40F09C62F1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{58053BA4-7083-48AF-9B27-5F40F09C62F1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{58053BA4-7083-48AF-9B27-5F40F09C62F1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{37451DB0-0144-4544-AE3C-36C2A61DEC1E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{37451DB0-0144-4544-AE3C-36C2A61DEC1E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{37451DB0-0144-4544-AE3C-36C2A61DEC1E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{37451DB0-0144-4544-AE3C-36C2A61DEC1E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
