@@ -20,4 +20,9 @@
     <ProjectReference Include="..\..\VacationManagerModelLibrary\ModelLibrary\ModelLibrary\ModelLibrary.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Models\Classes\" />
+    <Folder Include="Models\Windows\" />
+  </ItemGroup>
+
 </Project>

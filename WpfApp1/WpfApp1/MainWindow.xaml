@@ -6,9 +6,5 @@
         xmlns:local="clr-namespace:WpfApp1"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
-    <Grid>
-        <DataGrid x:Name="itemsGrid">
-            
-        </DataGrid>
-    </Grid>
+    <Frame x:Name="PageFrame" NavigationUIVisibility="Hidden"/>
 </Window>
