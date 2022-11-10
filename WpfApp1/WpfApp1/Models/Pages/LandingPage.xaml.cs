@@ -34,11 +34,12 @@ namespace Application.Models.Pages
 		{
 			InitializeComponent();
 
-			_controls.Add("navigation", new NavigationHeader());
-			_controls.Add("listusers", new ListUsers());
+			_ucontrols.Add("navigation", new NavigationHeader());
+			_ucontrols.Add("listusers", new ListUsers());
 
 
-			HeaderFrame.Content = _controls["navigation"];
+			HeaderFrame.Content = _ucontrols["navigation"];
+			BodyFrame.Content = _ucontrols["listusers"];
 		}
 
 		private IWindowContainer _windowOwner;
@@ -54,20 +55,20 @@ namespace Application.Models.Pages
 			set
 			{
 				_authUser = value;
-				foreach (IUserAuthenticated authControls in _controls.Values)
+				foreach (IUserAuthenticated authControls in _ucontrols.Values)
 					authControls.AuthenticatedUser = value;
 			}
 		}
 
-		private Dictionary<string, IControllable> _controls = new Dictionary<string, IControllable>();
-		public Dictionary<string, IControllable> Controls => _controls;
+		private Dictionary<string, IControllable> _ucontrols = new Dictionary<string, IControllable>();
+		public Dictionary<string, IControllable> Controls => _ucontrols;
 		public Tuple<Type, object>? this[string controlName]
 		{
 			get
 			{
-				if (!_controls.ContainsKey(controlName))
+				if (!_ucontrols.ContainsKey(controlName))
 					throw new ArgumentOutOfRangeException("controlName", $"Control \"{controlName}\" not in collection");
-				return _controls[controlName].Data;
+				return _ucontrols[controlName].Data;
 			}
 		}
 
@@ -83,7 +84,7 @@ namespace Application.Models.Pages
 
 		public void Clear()
 		{
-			foreach (IControllable controllable in _controls.Values)
+			foreach (IControllable controllable in _ucontrols.Values)
 				controllable.Clear();
 		}
 	}

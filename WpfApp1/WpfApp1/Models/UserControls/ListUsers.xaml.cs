@@ -2,6 +2,7 @@
 using ModelLibrary.Models.Data;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -22,6 +23,8 @@ namespace Application.Models.UserControls
 	/// </summary>
 	public partial class ListUsers : UserControl, IControllable, IUserAuthenticated
 	{
+		List<User> _queriedUsers = new List<User>();
+
 		public ListUsers()
 		{
 			InitializeComponent();
@@ -34,7 +37,21 @@ namespace Application.Models.UserControls
 
 		public void Clear()
 		{
-			
+
+		}
+
+		private void RefreshButton_Click(object sender, RoutedEventArgs e)
+		{
+			using (VacationManagerContext dbContext = new VacationManagerContext())
+			{
+				_queriedUsers = dbContext.Users.ToList();
+				UsersList.ItemsSource = _queriedUsers;
+			}
+		}
+
+		private void OpenMoreInfoButton_Click(object sender, RoutedEventArgs e)
+		{
+
 		}
 	}
 }
