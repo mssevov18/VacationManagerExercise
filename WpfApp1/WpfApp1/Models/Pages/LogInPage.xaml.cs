@@ -3,6 +3,7 @@ using ModelLibrary.Models.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -26,9 +27,9 @@ namespace Application.Models.Pages
 		{
 			InitializeComponent();
 		}
-		public LogInPage(IWindowContainer windowContainer)
+		public LogInPage(IWindowContainer WindowContainer)
 		{
-			_windowOwner = windowContainer;
+			this.WindowOwner = WindowContainer;
 
 			InitializeComponent();
 		}
@@ -36,8 +37,8 @@ namespace Application.Models.Pages
 		IWindowContainer _windowOwner;
 		public IWindowContainer WindowOwner { get => _windowOwner; set => _windowOwner = value; }
 
-		int IInterpagable.Width => 600;
-		int IInterpagable.Height => 800;
+		int IInterpagable.Width => 400;
+		int IInterpagable.Height => 600;
 
 		public void Close()
 		{
@@ -47,7 +48,7 @@ namespace Application.Models.Pages
 
 		public void RequestPageChange(string pageName)
 		{
-			throw new NotImplementedException();
+			_windowOwner.ChangePage(pageName);
 		}
 
 		private void SubmitButton_Click(object sender, RoutedEventArgs e)
@@ -58,12 +59,27 @@ namespace Application.Models.Pages
 
 			using (VacationManagerContext dbContext = new VacationManagerContext())
 			{
-				MessageBox.Show(dbContext
-					.Users
-					.Where(u=>u.IsDeleted==false)
-					.Where(u=>u.Username == UsernameBox.Text &&
-							  u.Password == PasswordBox.Password)
-					.Count().ToString());
+				try
+				{
+					Tuple<string, string> tuple = dbContext
+						.Users
+						.Where(u => u.IsDeleted == false &&
+								   u.Username == UsernameBox.Text &&
+								   u.Password == PasswordBox.Password)
+						.Select(u =>
+							new Tuple<string, string>(u.Username, u.Password))
+						.FirstOrDefault();
+
+					if (tuple.Item1 !=  UsernameBox.Text &&
+						tuple.Item2 != PasswordBox.Password)
+						throw new Exception($"Invalid token");
+
+					this.RequestPageChange("landing");
+				}
+				catch (Exception ex)
+				{
+					MessageBox.Show(ex.Message);
+				}
 			}
 		}
 	}

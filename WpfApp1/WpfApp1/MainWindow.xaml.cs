@@ -42,8 +42,8 @@ namespace WpfApp1
 		{
 			InitializeComponent();
 
-			_pages.Add("login", new LogInPage());
-			_pages.Add("landing", new LandingPage());
+			_pages.Add("login", new LogInPage(this));
+			_pages.Add("landing", new LandingPage(this));
 
 			ChangePage("login");
 

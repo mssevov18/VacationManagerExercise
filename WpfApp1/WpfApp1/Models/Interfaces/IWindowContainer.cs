@@ -11,5 +11,6 @@ namespace Application.Models.Interfaces
 	{
 		public Dictionary<string, IInterpagable> Pages { get; }
 		public IInterpagable this[string pageName] { get; }
+		public void ChangePage(string pageName);
 	}
 }

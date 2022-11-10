@@ -25,21 +25,27 @@ namespace Application.Models.Pages
 		{
 			InitializeComponent();
 		}
+		public LandingPage(IWindowContainer WindowContainer)
+		{
+			this.WindowOwner = WindowContainer;
+			InitializeComponent();
+		}
 
-		public IWindowContainer WindowOwner { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+		private IWindowContainer _windowOwner;
+		public IWindowContainer WindowOwner { get => _windowOwner; set => _windowOwner = value; }
 
-		int IInterpagable.Width => throw new NotImplementedException();
+		int IInterpagable.Width => 800;
 
-		int IInterpagable.Height => throw new NotImplementedException();
+		int IInterpagable.Height => 450;
 
 		public void Close()
 		{
-			throw new NotImplementedException();
+
 		}
 
 		public void RequestPageChange(string pageName)
 		{
-			throw new NotImplementedException();
+			_windowOwner.ChangePage(pageName);
 		}
 	}
 }

@@ -9,6 +9,6 @@
       Title="LandingPage">
 
     <Grid>
-        
+        <Rectangle Width="100" Height="500" Fill="Black"/>
     </Grid>
 </Page>
