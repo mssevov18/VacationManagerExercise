@@ -21,7 +21,7 @@ namespace WpfApp1
 	/// <summary>
 	/// Interaction logic for MainWindow.xaml
 	/// </summary>
-	public partial class MainWindow : Window, IWindowContainer
+	public partial class MainWindow : Window, IWindowContainer, IUserAuthenticated
 	{
 		private Dictionary<string, IInterpagable> _pages = new Dictionary<string, IInterpagable>();
 		private string loadedPage = "";
@@ -37,6 +37,21 @@ namespace WpfApp1
 		}
 
 		public Dictionary<string, IInterpagable> Pages { get => _pages; }
+
+		private User _authUser;
+		public User AuthenticatedUser 
+		{ 
+			get => _authUser;
+			set 
+			{
+				_authUser = value;
+				foreach (KeyValuePair<string,IInterpagable> authPages in _pages)
+				{
+					if (authPages.Key != loadedPage)
+						((IUserAuthenticated)authPages.Value).AuthenticatedUser = value;
+				}
+			} 
+		}
 
 		public MainWindow()
 		{

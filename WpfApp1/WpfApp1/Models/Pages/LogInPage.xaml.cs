@@ -21,7 +21,7 @@ namespace Application.Models.Pages
 	/// <summary>
 	/// Interaction logic for LogInPage.xaml
 	/// </summary>
-	public partial class LogInPage : Page, IInterpagable
+	public partial class LogInPage : Page, IInterpagable, IUserAuthenticated
 	{
 		public LogInPage()
 		{
@@ -40,6 +40,17 @@ namespace Application.Models.Pages
 		int IInterpagable.Width => 400;
 		int IInterpagable.Height => 600;
 
+		private User _authUser;
+		public User AuthenticatedUser
+		{
+			get => _authUser; 
+			set 
+			{
+				_authUser = value;
+				((IUserAuthenticated)_windowOwner).AuthenticatedUser = value;
+			}
+		}
+
 		public void Close()
 		{
 			UsernameBox.Clear();
@@ -53,6 +64,7 @@ namespace Application.Models.Pages
 
 		private void SubmitButton_Click(object sender, RoutedEventArgs e)
 		{
+			//Highlight incomplete inputs
 			if (UsernameBox.Text == String.Empty ||
 				PasswordBox.Password == String.Empty)
 				return;
@@ -61,19 +73,20 @@ namespace Application.Models.Pages
 			{
 				try
 				{
-					Tuple<string, string> tuple = dbContext
+					User? tempUser = dbContext
 						.Users
 						.Where(u => u.IsDeleted == false &&
 								   u.Username == UsernameBox.Text &&
 								   u.Password == PasswordBox.Password)
-						.Select(u =>
-							new Tuple<string, string>(u.Username, u.Password))
 						.FirstOrDefault();
 
-					if (tuple.Item1 !=  UsernameBox.Text &&
-						tuple.Item2 != PasswordBox.Password)
+
+					if (tempUser == null ||
+						(tempUser.Username != UsernameBox.Text &&
+						tempUser.Password != PasswordBox.Password))
 						throw new Exception($"Invalid token");
 
+					this.AuthenticatedUser = tempUser;
 					this.RequestPageChange("landing");
 				}
 				catch (Exception ex)

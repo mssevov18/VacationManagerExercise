@@ -1,4 +1,5 @@
 ﻿using Application.Models.Interfaces;
+using ModelLibrary.Models.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,7 +20,7 @@ namespace Application.Models.Pages
 	/// <summary>
 	/// Interaction logic for LandingPage.xaml
 	/// </summary>
-	public partial class LandingPage : Page, IInterpagable
+	public partial class LandingPage : Page, IInterpagable, IUserAuthenticated
 	{
 		public LandingPage()
 		{
@@ -37,6 +38,17 @@ namespace Application.Models.Pages
 		int IInterpagable.Width => 800;
 
 		int IInterpagable.Height => 450;
+
+		private User _authUser;
+		public User AuthenticatedUser
+		{
+			get => _authUser;
+			set
+			{
+				_authUser = value;
+				testinggg.Text = $"logged in as {_authUser.Username}";
+			}
+		}
 
 		public void Close()
 		{
