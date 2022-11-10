@@ -11,7 +11,7 @@
 			<RowDefinition Height="*"/>
 			<RowDefinition Height="*"/>
 			<RowDefinition Height="7*"/>
-			<RowDefinition Height="*"/>
+			<RowDefinition Height="3*"/>
 		</Grid.RowDefinitions>
 
 		<Grid Grid.Row="0">
@@ -23,9 +23,27 @@
 				<ColumnDefinition Width="*"/>
 			</Grid.ColumnDefinitions>
 
-			<Label Grid.Column="0" Content="Users"/>
-			<ComboBox Grid.Column="1"/>
-			<ComboBox Grid.Column="2"/>
+			<TextBox x:Name="SeachTextBox" Grid.Column="0" KeyDown="SeachTextBox_KeyDown"/>
+			<ComboBox Grid.Column="1" SelectionChanged="FilterCombo_SelectionChanged">
+				<ComboBoxItem Tag="N" Content="Filter" IsSelected="True"/>
+				<ComboBoxItem Tag="C" Content="CEOs"/>
+				<ComboBoxItem Tag="D" Content="Developers"/>
+				<ComboBoxItem Tag="L" Content="Team Leads"/>
+				<ComboBoxItem Tag="U" Content="Unassigned"/>
+			</ComboBox>
+			<ComboBox Grid.Column="2" SelectionChanged="SortCombo_SelectionChanged">
+				<ComboBoxItem Tag="N" Content="Sort" IsSelected="True"/>
+				<ComboBoxItem Tag="IA" Content="Id Asc"/>
+				<ComboBoxItem Tag="ID" Content="Id Dsc"/>
+				<ComboBoxItem Tag="RA" Content="Role Asc"/>
+				<ComboBoxItem Tag="RD" Content="Role Dsc"/>
+				<ComboBoxItem Tag="FA" Content="First name Asc"/>
+				<ComboBoxItem Tag="FD" Content="First name Asc"/>
+				<ComboBoxItem Tag="LA" Content="Last name Dsc"/>
+				<ComboBoxItem Tag="LD" Content="Last name Dsc"/>
+				<ComboBoxItem Tag="UA" Content="Username Dsc"/>
+				<ComboBoxItem Tag="UD" Content="Username Dsc"/>
+			</ComboBox>
 			<Button Content="Refresh" Grid.Column="3" Click="RefreshButton_Click"/>
 			<Button Grid.Column="4"/>
 
@@ -35,16 +53,16 @@
 			<Label Width="50" Content="Id"/>
 			<Label Width="200" Content="First Name"/>
 			<Label Width="200" Content="Username"/>
-			<Label Width="50" Content="Role"/>
+			<Label Width="100" Content="Role"/>
 		</StackPanel>
-		<ListView x:Name="UsersList" Grid.Row="2">
+		<ListView x:Name="UsersList" Grid.Row="2" >
 			<ListView.ItemTemplate>
 				<DataTemplate DataType="User">
 					<StackPanel Orientation="Horizontal">
 						<Label Width="50" Content="{Binding Path=Id}"/>
 						<Label Width="200" Content="{Binding Path=FirstName}"/>
 						<Label Width="200" Content="{Binding Path=Username}"/>
-						<Label Width="50" Content="{Binding Path=TextRole}"/>
+						<Label Width="100" Content="{Binding Path=TextRole}"/>
 						<Button Width="50" Content="More" Click="OpenMoreInfoButton_Click"/>
 					</StackPanel>
 				</DataTemplate>
@@ -53,6 +71,6 @@
 
 		</ListView>
 
-		<Frame Grid.Row="3" NavigationUIVisibility="Hidden"/>
+		<Frame x:Name="FooterFrame" Grid.Row="3" NavigationUIVisibility="Hidden"/>
 	</Grid>
 </UserControl>

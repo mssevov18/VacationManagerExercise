@@ -21,13 +21,19 @@ namespace Application.Models.UserControls
 	/// <summary>
 	/// Interaction logic for ListUsers.xaml
 	/// </summary>
-	public partial class ListUsers : UserControl, IControllable, IUserAuthenticated
+	public partial class ListUsers : UserControl, IControllable, IUserAuthenticated, IPaginated
 	{
 		List<User> _queriedUsers = new List<User>();
+		PaginationFooter _paginator;
+		bool _loading;
 
 		public ListUsers()
 		{
+			_loading = true;
 			InitializeComponent();
+
+			FooterFrame.Content = _paginator = new PaginationFooter(this);
+			_loading = false;
 		}
 
 		public Tuple<Type, object>? Data => null;
@@ -35,9 +41,11 @@ namespace Application.Models.UserControls
 		private User _authUser;
 		public User AuthenticatedUser { get => _authUser; set => _authUser = value; }
 
+		public int CollectionSize => _queriedUsers.Count;
+
 		public void Clear()
 		{
-
+			_paginator.Reset();
 		}
 
 		private void RefreshButton_Click(object sender, RoutedEventArgs e)
@@ -45,13 +53,43 @@ namespace Application.Models.UserControls
 			using (VacationManagerContext dbContext = new VacationManagerContext())
 			{
 				_queriedUsers = dbContext.Users.ToList();
-				UsersList.ItemsSource = _queriedUsers;
+				_paginator.Reset();
+				UpdateCollection();
 			}
 		}
 
 		private void OpenMoreInfoButton_Click(object sender, RoutedEventArgs e)
 		{
 
+		}
+
+		private void FilterCombo_SelectionChanged(object sender, SelectionChangedEventArgs e)
+		{
+			if (!_loading)
+				UpdateCollection();
+		}
+
+		private void SeachTextBox_KeyDown(object sender, KeyEventArgs e)
+		{
+			if (!_loading)
+				UpdateCollection();
+		}
+
+		private void SortCombo_SelectionChanged(object sender, SelectionChangedEventArgs e)
+		{
+			if (!_loading)
+				UpdateCollection();
+		}
+
+		public void UpdateCollection()
+		{
+			UsersList.ItemsSource = _queriedUsers
+				.Where(u =>
+				(SeachTextBox.Text == string.Empty ? true : u.Username.Contains(SeachTextBox.Text))
+				/*add more for filter*/
+				)
+				.Skip((_paginator.PageNumber - 1) * _paginator.PageSize)
+				.Take(_paginator.PageSize);
 		}
 	}
 }

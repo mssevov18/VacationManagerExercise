@@ -8,7 +8,8 @@
              d:DesignHeight="450" d:DesignWidth="800">
 	<Grid>
 		<Grid.ColumnDefinitions>
-			<ColumnDefinition Width="3*"/>
+			<ColumnDefinition Width="2*"/>
+			<ColumnDefinition Width="*"/>
 			<ColumnDefinition Width="*"/>
 			<ColumnDefinition Width="*"/>
 			<ColumnDefinition Width="*"/>
@@ -17,11 +18,17 @@
 			<ColumnDefinition Width="3*"/>
 		</Grid.ColumnDefinitions>
 
-		<Button Grid.Column="1" Content="|&lt;&lt;"/>
-		<Button Grid.Column="2" Content="&lt;--"/>
-		<Button Grid.Column="3" Content="_____"/>
-		<Button Grid.Column="4" Content="--&gt;"/>
-		<Button Grid.Column="5" Content="&gt;&gt;|"/>
+		<ComboBox x:Name="SizeBox" Grid.Column="1" VerticalContentAlignment="Center" SelectionChanged="ComboBox_SelectionChanged">
+			<ComboBoxItem Tag="5" Content="5" IsSelected="True"/>
+			<ComboBoxItem Tag="10" Content="10"/>
+			<ComboBoxItem Tag="100" Content="100"/>
+			<ComboBoxItem Tag="1000" Content="1000"/>
+		</ComboBox>
+		<Button x:Name="FirstButton" Grid.Column="2" Click="GoFirst" Content="[1]|&lt;"/>
+		<Button x:Name="PrevButton" Grid.Column="3" Click="GoPrevious" Content="&lt;-"/>
+		<Button x:Name="CurrentButton" Grid.Column="4" Content="_____"/>
+		<Button x:Name="NextButton" Grid.Column="5" Click="GoNext" Content="-&gt;"/>
+		<Button x:Name="LastButton" Grid.Column="6" Click="GoLast" Content="&gt;&gt;|"/>
 
 	</Grid>
 </UserControl>
