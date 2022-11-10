@@ -5,13 +5,29 @@
 	  xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
 	  xmlns:local="clr-namespace:Application.Models.Pages"
 	  mc:Ignorable="d" 
-	  d:DesignHeight="450" d:DesignWidth="800"
+	  Height="150" Width="400"
 	  Title="LogInPage">
+    <Page.Resources>
+        <Style TargetType="StackPanel">
+            <Setter Property="VerticalAlignment" Value="Stretch"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="Margin" Value="10 5 10 5"/>
+        </Style>
+        <Style TargetType="Button">
+            <Setter Property="Margin" Value="10 5 10 5"/>
+        </Style>
 
-	<StackPanel>
+        <Style TargetType="{x:Type FrameworkElement}">
+            <Setter Property="MinWidth" Value="150"/>
+        </Style>
+		<Style TargetType="TextBox" BasedOn="{StaticResource {x:Type FrameworkElement}}" />
+        <Style TargetType="PasswordBox" BasedOn="{StaticResource {x:Type FrameworkElement}}" />
+    </Page.Resources>
+
+    <StackPanel Background="White" >
 		<StackPanel Orientation="Horizontal">
 			<Label Content="Username"/>
-			<TextBox x:Name="UsernameBox"/>
+            <TextBox x:Name="UsernameBox"/>
 		</StackPanel>
 
 		<StackPanel Orientation="Horizontal">

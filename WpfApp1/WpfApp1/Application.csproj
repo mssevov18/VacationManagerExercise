@@ -22,6 +22,8 @@
 
   <ItemGroup>
     <Folder Include="Models\Classes\" />
+    <Folder Include="Models\Classes\" />
+    <Folder Include="Models\Windows\" />
     <Folder Include="Models\Windows\" />
   </ItemGroup>
 

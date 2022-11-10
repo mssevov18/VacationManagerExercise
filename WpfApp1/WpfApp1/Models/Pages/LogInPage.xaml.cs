@@ -37,8 +37,8 @@ namespace Application.Models.Pages
 		IWindowContainer _windowOwner;
 		public IWindowContainer WindowOwner { get => _windowOwner; set => _windowOwner = value; }
 
-		int IInterpagable.Width => 400;
-		int IInterpagable.Height => 600;
+		int IInterpagable.Width => Convert.ToInt32(this.Width);
+		int IInterpagable.Height => Convert.ToInt32(this.Height);
 
 		private User _authUser;
 		public User AuthenticatedUser
