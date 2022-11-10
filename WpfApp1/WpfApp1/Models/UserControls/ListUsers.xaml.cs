@@ -18,30 +18,23 @@ using System.Windows.Shapes;
 namespace Application.Models.UserControls
 {
 	/// <summary>
-	/// Interaction logic for NavigationHeader.xaml
+	/// Interaction logic for ListUsers.xaml
 	/// </summary>
-	public partial class NavigationHeader : UserControl, IControllable, IUserAuthenticated
+	public partial class ListUsers : UserControl, IControllable, IUserAuthenticated
 	{
-		public NavigationHeader() => _ClassInit();
-
-		private void _ClassInit()
+		public ListUsers()
 		{
 			InitializeComponent();
 		}
 
-        public Tuple<Type, object>? Data => null;
+		public Tuple<Type, object>? Data => null;
 
 		private User _authUser;
 		public User AuthenticatedUser { get => _authUser; set => _authUser = value; }
 
 		public void Clear()
-        {
-			return;
-        }
-
-		private void LogOut(object sender, RoutedEventArgs e)
 		{
-
+			
 		}
 	}
 }

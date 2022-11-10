@@ -23,15 +23,18 @@ namespace Application.Models.Pages
 	/// </summary>
 	public partial class LogInPage : Page, IInterpagable, IUserAuthenticated
 	{
-		public LogInPage()
-		{
-			InitializeComponent();
-		}
+		public LogInPage() => _ClassInit();
 		public LogInPage(IWindowContainer WindowContainer)
 		{
 			this.WindowOwner = WindowContainer;
 
+			_ClassInit();
+		}
+
+		private void _ClassInit()
+        {
 			InitializeComponent();
+
 		}
 
 		IWindowContainer _windowOwner;

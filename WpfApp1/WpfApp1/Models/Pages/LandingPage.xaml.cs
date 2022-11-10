@@ -1,4 +1,5 @@
 ﻿using Application.Models.Interfaces;
+using Application.Models.UserControls;
 using ModelLibrary.Models.Data;
 using System;
 using System.Collections.Generic;
@@ -20,16 +21,24 @@ namespace Application.Models.Pages
 	/// <summary>
 	/// Interaction logic for LandingPage.xaml
 	/// </summary>
-	public partial class LandingPage : Page, IInterpagable, IUserAuthenticated
+	public partial class LandingPage : Page, IInterpagable, IUserAuthenticated, IControlling
 	{
-		public LandingPage()
-		{
-			InitializeComponent();
-		}
+		public LandingPage() => _ClassInit();
 		public LandingPage(IWindowContainer WindowContainer)
 		{
 			this.WindowOwner = WindowContainer;
+			_ClassInit();
+		}
+
+		private void _ClassInit()
+		{
 			InitializeComponent();
+
+			_controls.Add("navigation", new NavigationHeader());
+			_controls.Add("listusers", new ListUsers());
+
+
+			HeaderFrame.Content = _controls["navigation"];
 		}
 
 		private IWindowContainer _windowOwner;
@@ -45,18 +54,37 @@ namespace Application.Models.Pages
 			set
 			{
 				_authUser = value;
-				testinggg.Text = $"logged in as {_authUser.Username}";
+				foreach (IUserAuthenticated authControls in _controls.Values)
+					authControls.AuthenticatedUser = value;
+			}
+		}
+
+		private Dictionary<string, IControllable> _controls = new Dictionary<string, IControllable>();
+		public Dictionary<string, IControllable> Controls => _controls;
+		public Tuple<Type, object>? this[string controlName]
+		{
+			get
+			{
+				if (!_controls.ContainsKey(controlName))
+					throw new ArgumentOutOfRangeException("controlName", $"Control \"{controlName}\" not in collection");
+				return _controls[controlName].Data;
 			}
 		}
 
 		public void Close()
 		{
-
+			this.Clear();
 		}
 
 		public void RequestPageChange(string pageName)
 		{
 			_windowOwner.ChangePage(pageName);
+		}
+
+		public void Clear()
+		{
+			foreach (IControllable controllable in _controls.Values)
+				controllable.Clear();
 		}
 	}
 }

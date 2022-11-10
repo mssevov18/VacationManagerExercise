@@ -1,12 +1,37 @@
 ﻿<UserControl x:Class="Application.Models.UserControls.NavigationHeader"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:Application.Models.UserControls"
-             mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
-            
-    </Grid>
+			 xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+			 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+			 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+			 xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+			 xmlns:local="clr-namespace:Application.Models.UserControls"
+			 mc:Ignorable="d" 
+			 Height="60" Width="800">
+	<Border BorderBrush="Black" BorderThickness="0,0,0,5">
+
+		<Grid Background="White" Margin="5 0 5 0">
+			<Grid.Resources>
+				<Style TargetType="Button">
+					<Setter Property="Margin" Value="5 10 5 0"/>
+					<Setter Property="FontSize" Value="18"/>
+				</Style>
+			</Grid.Resources>
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="*"/>
+				<ColumnDefinition Width="*"/>
+				<ColumnDefinition Width="*"/>
+				<ColumnDefinition Width="*"/>
+				<ColumnDefinition Width="*"/>
+				<ColumnDefinition Width="*"/>
+				<ColumnDefinition Width="*"/>
+			</Grid.ColumnDefinitions>
+
+			<Button Content="This" Grid.Column="0"/>
+			<Button Content="No" Grid.Column="1"/>
+			<Button Content="Work" Grid.Column="2"/>
+			<Button Content="For" Grid.Column="3"/>
+			<Button Content="Now" Grid.Column="4"/>
+			<Button Content="):" Grid.Column="5"/>
+			<Button Content="Log out" Click="LogOut" Grid.Column="6"/>
+		</Grid>
+	</Border>
 </UserControl>

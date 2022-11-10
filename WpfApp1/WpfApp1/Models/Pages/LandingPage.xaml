@@ -9,6 +9,12 @@
       Title="LandingPage">
 
     <Grid Background="White">
-        <TextBlock x:Name="testinggg"/>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1.5*"/>
+            <RowDefinition Height="8.5*"/>
+        </Grid.RowDefinitions>
+
+        <Frame x:Name="HeaderFrame" Grid.Row="0" NavigationUIVisibility="Hidden"/>
+        <Frame x:Name="BodyFrame" Grid.Row="1" NavigationUIVisibility="Hidden"/>
     </Grid>
 </Page>
