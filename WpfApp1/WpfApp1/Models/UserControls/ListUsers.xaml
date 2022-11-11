@@ -56,7 +56,7 @@
 			<Label Width="150" Content="Username"/>
 			<Label Width="100" Content="Role"/>
 		</StackPanel>
-		<ListView x:Name="UsersList" Grid.Row="2" >
+		<ListView x:Name="UsersList" Grid.Row="2">
 			<ListView.ItemTemplate>
 				<DataTemplate DataType="User">
 					<StackPanel Orientation="Horizontal">
@@ -65,13 +65,35 @@
 						<Label Width="150" Content="{Binding Path=LastName}"/>
 						<Label Width="150" Content="{Binding Path=Username}"/>
 						<Label Width="100" Content="{Binding Path=TextRole}"/>
-						<Button Width="50" Content="More" Click="OpenMoreInfoButton_Click"/>
+						<Button Width="50" Tag="{Binding Path=Id}" Content="More" Click="OpenMoreInfoButton_Click"/>
 					</StackPanel>
 				</DataTemplate>
 			</ListView.ItemTemplate>
-
-
 		</ListView>
+
+		<Popup x:Name="ViewUserPopup" MinWidth="200" MinHeight="400" DataContext="{Binding PublicUser}" IsOpen="False" Placement="Left">
+			<Border Background="White" BorderBrush="Black" BorderThickness="1,1,1,1" CornerRadius="5,5,5,5">
+				<Grid>
+					<Grid.RowDefinitions>
+						<RowDefinition Height="*"/>
+						<RowDefinition Height="*"/>
+						<RowDefinition Height="4*"/>
+						<RowDefinition Height="*"/>
+					</Grid.RowDefinitions>
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="*"/>
+						<ColumnDefinition Width="*"/>
+						<ColumnDefinition Width="*"/>
+					</Grid.ColumnDefinitions>
+
+					<Label Content="{Binding Path=FirstName}" Grid.Row="0" Grid.Column="0"/>
+					<Label Content="{Binding Path=LastName}" Grid.Row="0" Grid.Column="1"/>
+					<Label Content="{Binding Path=Username}" Grid.Row="1" Grid.Column="0"/>
+					<Label Content="{Binding Path=TextRole}" Grid.Row="2" Grid.Column="0"/>
+					<Button x:Name="CloseViewUserPopup" Content="Close" Grid.Column="1" Grid.Row="4" Click="CloseViewUserPopup_Click"/>
+				</Grid>
+			</Border>
+		</Popup>
 
 		<Frame x:Name="FooterFrame" Grid.Row="3" NavigationUIVisibility="Hidden"/>
 	</Grid>

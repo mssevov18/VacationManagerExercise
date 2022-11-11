@@ -42,6 +42,8 @@ namespace Application.Models.UserControls
 		private User _authUser;
 		public User AuthenticatedUser { get => _authUser; set => _authUser = value; }
 
+		public User? PublicUser { get; set; }
+
 		public int CollectionSize => _selectedUsers.Count;
 
 		public void Clear()
@@ -57,11 +59,6 @@ namespace Application.Models.UserControls
 				_paginator.Reset();
 				UpdateCollection();
 			}
-		}
-
-		private void OpenMoreInfoButton_Click(object sender, RoutedEventArgs e)
-		{
-
 		}
 
 		private void FilterCombo_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -105,12 +102,12 @@ namespace Application.Models.UserControls
 					if (unboxedTag.Length > 1)
 					{
 						if (unboxedTag[1] == 'D')
-							_queriedUsers = _queriedUsers.OrderByDescending(OrderFunc).ToList();
+							_selectedUsers = _queriedUsers.OrderByDescending(OrderFunc).ToList();
 						else
-							_queriedUsers = _queriedUsers.OrderBy(OrderFunc).ToList();
+							_selectedUsers = _queriedUsers.OrderBy(OrderFunc).ToList();
 					}
 					else
-						_queriedUsers = _queriedUsers.OrderBy(OrderFunc).ToList();
+						_selectedUsers = _queriedUsers.OrderBy(OrderFunc).ToList();
 				}
 			}
 			UpdateCollection();
@@ -139,6 +136,21 @@ namespace Application.Models.UserControls
 				.Take(_paginator.PageSize)
 				.ToList();
 			UsersList.ItemsSource = _selectedUsers;
+		}
+		private void OpenMoreInfoButton_Click(object sender, RoutedEventArgs e)
+		{
+			PublicUser = _queriedUsers.FirstOrDefault(qu => qu.Id == (((User)((Button)sender).DataContext)).Id);
+			if (PublicUser == null)
+				return;
+
+			ViewUserPopup.DataContext = PublicUser;
+			ViewUserPopup.IsOpen = true;
+		}
+
+		private void CloseViewUserPopup_Click(object sender, RoutedEventArgs e)
+		{
+			ViewUserPopup.IsOpen = false;
+			PublicUser = null;
 		}
 	}
 }
