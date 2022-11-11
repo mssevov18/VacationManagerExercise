@@ -45,7 +45,7 @@
 				<ComboBoxItem Tag="UD" Content="Username Dsc"/>
 			</ComboBox>
 			<Button Content="Refresh" Grid.Column="3" Click="RefreshButton_Click"/>
-			<Button Content="Add" Grid.Column="4"/>
+			<Button x:Name="AddUser" Visibility="Hidden" Content="Add" Grid.Column="4" Click="OpenEmptyPopupButton_Click"/>
 
 		</Grid>
 
@@ -113,10 +113,16 @@
 
 					<TextBox x:Name="PopupFirstNameBox" IsEnabled="False" Text="{Binding Path=FirstName, Mode=OneWay}" Grid.Row="0" Grid.Column="0"/>
 					<TextBox x:Name="PopupLastNameBox" IsEnabled="False"  Text="{Binding Path=LastName, Mode=OneWay}" Grid.Row="0" Grid.Column="1"/>
+
 					<TextBox x:Name="PopupUsernameBox" IsEnabled="False"  Text="{Binding Path=Username, Mode=OneWay}" Grid.Row="1" Grid.Column="0"/>
+					<PasswordBox x:Name="PopupPasswordBox" IsEnabled="False" Visibility="Hidden" Password="{Binding Path=Password, Mode=OneWay}" Grid.Row="1" Grid.Column="1"/>
+
 					<TextBox x:Name="PopupRoleBox" IsEnabled="False"  Text="{Binding Path=TextRole, Mode=OneWay}" Grid.Row="2" Grid.Column="0"/>
+
+					<Button x:Name="AddUserPopup" Visibility="Hidden" Content="Add" Grid.Column="0" Grid.Row="4" Click="AddUserPopup_Click"/>
 					<Button x:Name="CloseViewUserPopup" Content="Close" Grid.Column="1" Grid.Row="4" Click="CloseViewUserPopup_Click"/>
-<!--Add buttons (edit) + constructor + Empty popup for add func-->
+					<Button x:Name="EditUserPopup" Visibility="Hidden" Content="Update" Grid.Column="2" Grid.Row="4" Click="EditUserPopup_Click"/>
+					<!--Add buttons (edit) + constructor + Empty popup for add func-->
 				</Grid>
 			</Border>
 		</Popup>

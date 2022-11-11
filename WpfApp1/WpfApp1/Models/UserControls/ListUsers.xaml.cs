@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Runtime.Intrinsics.X86;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -27,6 +28,7 @@ namespace Application.Models.UserControls
 		List<User> _selectedUsers = new List<User>();
 		PaginationFooter _paginator;
 		bool _loading;
+		bool _addMode = false;
 
 		public ListUsers()
 		{
@@ -52,6 +54,9 @@ namespace Application.Models.UserControls
 					PopupLastNameBox.IsEnabled = _authUser.CanEditUsers;
 					PopupUsernameBox.IsEnabled = _authUser.CanEditUsers;
 					PopupRoleBox.IsEnabled = _authUser.CanEditUsers;
+					AddUser.Visibility = _authUser.CanEditUsers ? Visibility.Visible : Visibility.Hidden;
+					AddUserPopup.Visibility = _authUser.CanEditUsers ? Visibility.Visible : Visibility.Hidden;
+					EditUserPopup.Visibility = _authUser.CanEditUsers ? Visibility.Visible : Visibility.Hidden;
 					LoggedIn = true;
 				}
 			}
@@ -72,6 +77,7 @@ namespace Application.Models.UserControls
 			SortCombo.SelectedIndex = 0;
 			SeachTextBox.Clear();
 			UsersList.ItemsSource = null;
+			_addMode = false;
 		}
 
 		private void RefreshButton_Click(object sender, RoutedEventArgs e)
@@ -79,6 +85,7 @@ namespace Application.Models.UserControls
 			using (VacationManagerContext dbContext = new VacationManagerContext())
 			{
 				_queriedUsers = dbContext.Users.ToList();
+				_addMode = false;
 				_paginator.Reset();
 				UpdateCollection();
 			}
@@ -174,6 +181,80 @@ namespace Application.Models.UserControls
 		{
 			ViewUserPopup.IsOpen = false;
 			PublicUser = null;
+		}
+
+		private void CreateUser()
+		{
+			if (PopupFirstNameBox.Text == string.Empty ||
+	PopupLastNameBox.Text == string.Empty ||
+	PopupUsernameBox.Text == string.Empty ||
+	PopupRoleBox.Text == string.Empty)
+				return;
+
+			User user = new User();
+			user.FirstName = PopupFirstNameBox.Text;
+			user.LastName = PopupLastNameBox.Text;
+			user.Username = PopupUsernameBox.Text;
+			switch (PopupRoleBox.Text)
+			{
+				case "CEO":
+					user.Role = "C";
+					break;
+				case "Team Lead":
+					user.Role = "L";
+					break;
+				case "Developer":
+					user.Role = "D";
+					break;
+				default:
+					user.Role = "U";
+					break;
+			}
+			using (VacationManagerContext dbContext = new VacationManagerContext())
+			{
+				//PopupFirstNameBox, PopupLastNameBox, PopupUsernameBox, PopupRoleBox
+				if (dbContext.Users.Where(u => u.Username == PopupUsernameBox.Text).Count() == 0)
+				{
+					dbContext.Users.Add(user);
+					dbContext.SaveChanges();
+				}
+			}
+		}
+
+		private void EditUserPopup_Click(object sender, RoutedEventArgs e)
+		{
+			if (PopupFirstNameBox.Text == string.Empty ||
+				PopupLastNameBox.Text == string.Empty ||
+				PopupUsernameBox.Text == string.Empty ||
+				PopupRoleBox.Text == string.Empty)
+				return;
+			//PopupFirstNameBox, PopupLastNameBox, PopupUsernameBox, PopupRoleBox
+
+		}
+
+		private void AddUserPopup_Click(object sender, RoutedEventArgs e)
+		{
+			if (PopupFirstNameBox.Text == string.Empty ||
+				PopupLastNameBox.Text == string.Empty ||
+				PopupUsernameBox.Text == string.Empty ||
+				PopupRoleBox.Text == string.Empty)
+				return;
+
+			_addMode = true;
+			PopupPasswordBox.Visibility = Visibility.Visible;
+			PopupPasswordBox.IsEnabled = true;
+
+			CreateUser();
+			//Not Done
+
+			PopupPasswordBox.IsEnabled = false;
+		}
+
+		private void OpenEmptyPopupButton_Click(object sender, RoutedEventArgs e)
+		{
+			PublicUser = new User();
+			ViewUserPopup.DataContext = PublicUser;
+			ViewUserPopup.IsOpen = true;
 		}
 	}
 }
