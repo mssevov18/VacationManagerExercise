@@ -40,8 +40,8 @@ namespace WpfApp1
 		public Dictionary<string, IInterpagable> Pages { get => _pages; }
 
 		private User _authUser;
-		public User AuthenticatedUser 
-		{ 
+		public User AuthenticatedUser
+		{
 			get => _authUser;
 			set
 			{
@@ -64,6 +64,23 @@ namespace WpfApp1
 
 			_pages.Add("login", new LogInPage(this));
 			_pages.Add("landing", new LandingPage(this));
+
+			using (VacationManagerContext dbContext = new VacationManagerContext())
+			{
+				if (dbContext.Users.Count() == 0)
+				{
+					dbContext.Users.Add(new User()
+					{
+						FirstName = "Martin",
+						LastName = "Sevov",
+						Username = "admin",
+						Password = "admin",
+						IsDeleted = false,
+						Role = "CEO"
+					});
+					dbContext.SaveChanges();
+				}
+			}
 
 			ChangePage("login");
 
