@@ -23,8 +23,8 @@
 				<ColumnDefinition Width="*"/>
 			</Grid.ColumnDefinitions>
 
-			<TextBox x:Name="SeachTextBox" Grid.Column="0" KeyDown="SeachTextBox_KeyDown"/>
-			<ComboBox Grid.Column="1" SelectionChanged="FilterCombo_SelectionChanged">
+			<TextBox x:Name="SeachTextBox" Grid.Column="0" PreviewKeyDown="SeachTextBox_PreviewKeyDown"/>
+			<ComboBox x:Name="FilterCombo" Grid.Column="1" SelectionChanged="FilterCombo_SelectionChanged">
 				<ComboBoxItem Tag="N" Content="Filter" IsSelected="True"/>
 				<ComboBoxItem Tag="C" Content="CEOs"/>
 				<ComboBoxItem Tag="D" Content="Developers"/>
@@ -45,7 +45,7 @@
 				<ComboBoxItem Tag="UD" Content="Username Dsc"/>
 			</ComboBox>
 			<Button Content="Refresh" Grid.Column="3" Click="RefreshButton_Click"/>
-			<Button Grid.Column="4"/>
+			<Button Content="Add" Grid.Column="4"/>
 
 		</Grid>
 

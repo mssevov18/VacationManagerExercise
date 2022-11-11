@@ -69,10 +69,9 @@ namespace Application.Models.UserControls
 				UpdateCollection();
 		}
 
-		private void SeachTextBox_KeyDown(object sender, KeyEventArgs e)
+		private void SeachTextBox_PreviewKeyDown(object sender, KeyEventArgs e)
 		{
-			if (!_loading)
-				UpdateCollection();
+			UpdateCollection();
 		}
 
 		private void SortCombo_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -85,7 +84,21 @@ namespace Application.Models.UserControls
 		{
 			UsersList.ItemsSource = _queriedUsers
 				.Where(u =>
-				(SeachTextBox.Text == string.Empty ? true : u.Username.Contains(SeachTextBox.Text))
+				(SeachTextBox.Text == string.Empty ? 
+					true : 
+					u.Username.Contains(SeachTextBox.Text)) &&
+				(((ComboBoxItem)FilterCombo.SelectedItem).Tag.ToString() == "C" ?
+					u.Role == "C" :
+					true) &&
+				(((ComboBoxItem)FilterCombo.SelectedItem).Tag.ToString() == "D" ?
+					u.Role == "D" :
+					true) &&
+				(((ComboBoxItem)FilterCombo.SelectedItem).Tag.ToString() == "L" ?
+					u.Role == "L" :
+					true) &&
+				(((ComboBoxItem)FilterCombo.SelectedItem).Tag.ToString() == "U" ?
+					u.Role == "U" :
+					true)
 				/*add more for filter*/
 				)
 				.Skip((_paginator.PageNumber - 1) * _paginator.PageSize)
