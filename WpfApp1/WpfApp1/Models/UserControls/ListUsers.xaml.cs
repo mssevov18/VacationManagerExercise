@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Runtime.Intrinsics.X86;
+using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -252,26 +253,27 @@ namespace Application.Models.UserControls
 
 		private void EditUserPopup_Click(object sender, RoutedEventArgs e)
 		{
-			if (PopupFirstNameBox.Text == string.Empty ||
-				PopupLastNameBox.Text == string.Empty ||
-				PopupUsernameBox.Text == string.Empty ||
-				PopupRoleBox.Text == string.Empty)
-				return;
+			MessageBox.Show("Not stable");
 
-			using (VacationManagerContext dbContext = new VacationManagerContext())
-			{
-				//PopupFirstNameBox, PopupLastNameBox, PopupUsernameBox, PopupRoleBox
-				User temp = dbContext.Users.Where(u => u.Username == PopupUsernameBox.Text).FirstOrDefault();
-				temp.FirstName = PopupFirstNameBox.Text;
-				temp.LastName = PopupLastNameBox.Text;
-				temp.Role = PopupRoleBox.Text;
-				_queriedUsers.FirstOrDefault(u => u.Username == PopupUsernameBox.Text).FirstName = PopupFirstNameBox.Text;
-				_queriedUsers.FirstOrDefault(u => u.Username == PopupUsernameBox.Text).LastName = PopupLastNameBox.Text;
-				_queriedUsers.FirstOrDefault(u => u.Username == PopupUsernameBox.Text).Role = PopupRoleBox.Text;
-				dbContext.SaveChanges();
-			}
+			//if (PopupFirstNameBox.Text == string.Empty ||
+			//	PopupLastNameBox.Text == string.Empty ||
+			//	PopupUsernameBox.Text == string.Empty ||
+			//	PopupRoleBox.Text == string.Empty)
+			//	return;
+
+			//using (VacationManagerContext dbContext = new VacationManagerContext())
+			//{
+			//	//PopupFirstNameBox, PopupLastNameBox, PopupUsernameBox, PopupRoleBox
+			//	User temp = dbContext.Users.Where(u => u.Username == PopupUsernameBox.Text).FirstOrDefault();
+			//	temp.FirstName = PopupFirstNameBox.Text;
+			//	temp.LastName = PopupLastNameBox.Text;
+			//	temp.Role = PopupRoleBox.Text;
+			//	_queriedUsers.FirstOrDefault(u => u.Username == PopupUsernameBox.Text).FirstName = PopupFirstNameBox.Text;
+			//	_queriedUsers.FirstOrDefault(u => u.Username == PopupUsernameBox.Text).LastName = PopupLastNameBox.Text;
+			//	_queriedUsers.FirstOrDefault(u => u.Username == PopupUsernameBox.Text).Role = PopupRoleBox.Text;
+			//	dbContext.SaveChanges();
+			//}
 		}
-
 		private void AddUserPopup_Click(object sender, RoutedEventArgs e)
 		{
 			if (PopupFirstNameBox.Text == string.Empty ||
