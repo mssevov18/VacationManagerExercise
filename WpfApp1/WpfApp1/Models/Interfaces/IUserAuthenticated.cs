@@ -11,5 +11,6 @@ namespace Application.Models.Interfaces
 	public interface IUserAuthenticated
 	{
 		public User AuthenticatedUser { get; set; }
+		public bool LoggedIn { get; set; }
 	}
 }

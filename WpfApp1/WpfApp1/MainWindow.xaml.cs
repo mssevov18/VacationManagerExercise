@@ -1,6 +1,7 @@
 ﻿using Application.Models.Interfaces;
 using Application.Models.Pages;
 using ModelLibrary.Models.Data;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -42,16 +43,20 @@ namespace WpfApp1
 		public User AuthenticatedUser 
 		{ 
 			get => _authUser;
-			set 
+			set
 			{
 				_authUser = value;
-				foreach (KeyValuePair<string,IInterpagable> authPages in _pages)
+				foreach (KeyValuePair<string, IInterpagable> authPages in _pages)
 				{
 					if (authPages.Key != loadedPage)
+					{
 						((IUserAuthenticated)authPages.Value).AuthenticatedUser = value;
+						((IUserAuthenticated)authPages.Value).LoggedIn = value != null;
+					}
 				}
-			} 
+			}
 		}
+		public bool LoggedIn { get; set; }
 
 		public MainWindow()
 		{
@@ -74,6 +79,17 @@ namespace WpfApp1
 				this.Width = _pages[loadedPage].Width;
 				this.Height = _pages[loadedPage].Height;
 			}
+		}
+
+		public void LogOut()
+		{
+			loadedPage = "";
+			LoggedIn = false;
+			//foreach (KeyValuePair<string, IInterpagable> authPages in _pages)
+			//	if (authPages.Key != loadedPage)
+			//		((IUserAuthenticated)authPages.Value).LoggedIn = LoggedIn;
+			AuthenticatedUser = null;
+			ChangePage("login");
 		}
 	}
 }

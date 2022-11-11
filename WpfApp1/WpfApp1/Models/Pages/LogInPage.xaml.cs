@@ -50,9 +50,12 @@ namespace Application.Models.Pages
 			set 
 			{
 				_authUser = value;
-				((IUserAuthenticated)_windowOwner).AuthenticatedUser = value;
+				if (!LoggedIn)
+					((IUserAuthenticated)_windowOwner).AuthenticatedUser = value;
 			}
 		}
+
+		public bool LoggedIn { get; set; }
 
 		public void Close()
 		{
@@ -90,6 +93,7 @@ namespace Application.Models.Pages
 						throw new Exception($"Invalid token");
 
 					this.AuthenticatedUser = tempUser;
+					LoggedIn = true;
 					this.RequestPageChange("landing");
 				}
 				catch (Exception ex)

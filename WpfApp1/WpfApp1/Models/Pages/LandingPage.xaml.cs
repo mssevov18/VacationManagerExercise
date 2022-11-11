@@ -34,7 +34,7 @@ namespace Application.Models.Pages
 		{
 			InitializeComponent();
 
-			_ucontrols.Add("navigation", new NavigationHeader());
+			_ucontrols.Add("navigation", new NavigationHeader(this.WindowOwner));
 			_ucontrols.Add("listusers", new ListUsers());
 
 
@@ -59,6 +59,7 @@ namespace Application.Models.Pages
 					authControls.AuthenticatedUser = value;
 			}
 		}
+		public bool LoggedIn { get; set; }
 
 		private Dictionary<string, IControllable> _ucontrols = new Dictionary<string, IControllable>();
 		public Dictionary<string, IControllable> Controls => _ucontrols;

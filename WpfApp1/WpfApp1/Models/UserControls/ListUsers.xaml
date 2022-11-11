@@ -71,7 +71,7 @@
 			</ListView.ItemTemplate>
 		</ListView>
 
-		<Popup x:Name="ViewUserPopup" MinWidth="200" MinHeight="400" DataContext="{Binding PublicUser}" IsOpen="False" Placement="Left">
+		<!--<Popup x:Name="ViewUserPopup" MinWidth="200" MinHeight="400" DataContext="{Binding PublicUser}" IsOpen="False" Placement="Left">
 			<Border Background="White" BorderBrush="Black" BorderThickness="1,1,1,1" CornerRadius="5,5,5,5">
 				<Grid>
 					<Grid.RowDefinitions>
@@ -91,6 +91,32 @@
 					<Label Content="{Binding Path=Username}" Grid.Row="1" Grid.Column="0"/>
 					<Label Content="{Binding Path=TextRole}" Grid.Row="2" Grid.Column="0"/>
 					<Button x:Name="CloseViewUserPopup" Content="Close" Grid.Column="1" Grid.Row="4" Click="CloseViewUserPopup_Click"/>
+				</Grid>
+			</Border>
+		</Popup>-->
+
+		<Popup x:Name="ViewUserPopup" MinWidth="200" MinHeight="400" DataContext="{Binding PublicUser}" IsOpen="False" Placement="Left">
+			<Border Background="White" BorderBrush="Black" BorderThickness="1,1,1,1" CornerRadius="5,5,5,5">
+				<Grid>
+					<Grid.RowDefinitions>
+						<RowDefinition Height="*"/>
+						<RowDefinition Height="*"/>
+						<RowDefinition Height="*"/>
+						<RowDefinition Height="3*"/>
+						<RowDefinition Height="*"/>
+					</Grid.RowDefinitions>
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="*"/>
+						<ColumnDefinition Width="*"/>
+						<ColumnDefinition Width="*"/>
+					</Grid.ColumnDefinitions>
+
+					<TextBox x:Name="PopupFirstNameBox" IsEnabled="False" Text="{Binding Path=FirstName, Mode=OneWay}" Grid.Row="0" Grid.Column="0"/>
+					<TextBox x:Name="PopupLastNameBox" IsEnabled="False"  Text="{Binding Path=LastName, Mode=OneWay}" Grid.Row="0" Grid.Column="1"/>
+					<TextBox x:Name="PopupUsernameBox" IsEnabled="False"  Text="{Binding Path=Username, Mode=OneWay}" Grid.Row="1" Grid.Column="0"/>
+					<TextBox x:Name="PopupRoleBox" IsEnabled="False"  Text="{Binding Path=TextRole, Mode=OneWay}" Grid.Row="2" Grid.Column="0"/>
+					<Button x:Name="CloseViewUserPopup" Content="Close" Grid.Column="1" Grid.Row="4" Click="CloseViewUserPopup_Click"/>
+<!--Add buttons (edit) + constructor + Empty popup for add func-->
 				</Grid>
 			</Border>
 		</Popup>

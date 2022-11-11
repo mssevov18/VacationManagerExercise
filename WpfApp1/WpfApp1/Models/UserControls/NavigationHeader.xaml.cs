@@ -22,7 +22,14 @@ namespace Application.Models.UserControls
 	/// </summary>
 	public partial class NavigationHeader : UserControl, IControllable, IUserAuthenticated
 	{
+		public IWindowContainer WindowContainer { get; set; }
+
 		public NavigationHeader() => _ClassInit();
+		public NavigationHeader(IWindowContainer container)
+		{
+			WindowContainer = container;
+			_ClassInit();
+		}
 
 		private void _ClassInit()
 		{
@@ -32,7 +39,17 @@ namespace Application.Models.UserControls
         public Tuple<Type, object>? Data => null;
 
 		private User _authUser;
-		public User AuthenticatedUser { get => _authUser; set => _authUser = value; }
+		public User AuthenticatedUser
+		{
+			get => _authUser;
+			set
+			{
+				_authUser = value;
+				if (value != null)
+					LoggedIn = true;
+			}
+		}
+		public bool LoggedIn { get; set; }
 
 		public void Clear()
         {
@@ -41,7 +58,8 @@ namespace Application.Models.UserControls
 
 		private void LogOut(object sender, RoutedEventArgs e)
 		{
-
+			if (WindowContainer != null)
+				WindowContainer.LogOut();
 		}
 	}
 }

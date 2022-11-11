@@ -7,11 +7,11 @@ using System.Windows.Controls;
 
 namespace Application.Models.Interfaces
 {
-    public interface IControllable
-    {
-        public string Name { get; set; }
+	public interface IControllable
+	{
+		public string Name { get; set; }
 
-        public Tuple<Type, object>? Data { get; }
-        public void Clear();
-    }
+		public Tuple<Type, object>? Data { get; }
+		public void Clear();
+	}
 }

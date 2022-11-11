@@ -40,15 +40,38 @@ namespace Application.Models.UserControls
 		public Tuple<Type, object>? Data => null;
 
 		private User _authUser;
-		public User AuthenticatedUser { get => _authUser; set => _authUser = value; }
+		public User AuthenticatedUser
+		{
+			get => _authUser;
+			set
+			{
+				_authUser = value;
+				if (value != null)
+				{
+					PopupFirstNameBox.IsEnabled = _authUser.CanEditUsers;
+					PopupLastNameBox.IsEnabled = _authUser.CanEditUsers;
+					PopupUsernameBox.IsEnabled = _authUser.CanEditUsers;
+					PopupRoleBox.IsEnabled = _authUser.CanEditUsers;
+					LoggedIn = true;
+				}
+			}
+		}
+		public bool LoggedIn { get; set; }
 
 		public User? PublicUser { get; set; }
 
-		public int CollectionSize => _selectedUsers.Count;
+		public int CollectionSize => _queriedUsers.Count;
 
 		public void Clear()
 		{
 			_paginator.Reset();
+			PublicUser = null;
+			_queriedUsers = null;
+			_selectedUsers = null;
+			FilterCombo.SelectedIndex = 0;
+			SortCombo.SelectedIndex = 0;
+			SeachTextBox.Clear();
+			UsersList.ItemsSource = null;
 		}
 
 		private void RefreshButton_Click(object sender, RoutedEventArgs e)
