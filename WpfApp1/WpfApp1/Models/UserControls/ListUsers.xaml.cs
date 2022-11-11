@@ -24,6 +24,7 @@ namespace Application.Models.UserControls
 	public partial class ListUsers : UserControl, IControllable, IUserAuthenticated, IPaginated
 	{
 		List<User> _queriedUsers = new List<User>();
+		List<User> _selectedUsers = new List<User>();
 		PaginationFooter _paginator;
 		bool _loading;
 
@@ -41,7 +42,7 @@ namespace Application.Models.UserControls
 		private User _authUser;
 		public User AuthenticatedUser { get => _authUser; set => _authUser = value; }
 
-		public int CollectionSize => _queriedUsers.Count;
+		public int CollectionSize => _selectedUsers.Count;
 
 		public void Clear()
 		{
@@ -76,33 +77,68 @@ namespace Application.Models.UserControls
 
 		private void SortCombo_SelectionChanged(object sender, SelectionChangedEventArgs e)
 		{
-			if (!_loading)
-				UpdateCollection();
+			if (_loading)
+				return;
+
+			if (SortCombo.SelectedItem != null)
+			{
+				Func<User, object> OrderFunc = (User u) => u.Id;
+				string unboxedTag = ((ComboBoxItem)SortCombo.SelectedItem).Tag.ToString();
+				if (unboxedTag != null)
+				{
+
+					switch (unboxedTag[0])
+					{
+						case 'R':
+							OrderFunc = (User u) => u.Role;
+							break;
+						case 'F':
+							OrderFunc = (User u) => u.FirstName;
+							break;
+						case 'L':
+							OrderFunc = (User u) => u.LastName;
+							break;
+						case 'U':
+							OrderFunc = (User u) => u.Username;
+							break;
+					}
+					if (unboxedTag.Length > 1)
+					{
+						if (unboxedTag[1] == 'D')
+							_queriedUsers = _queriedUsers.OrderByDescending(OrderFunc).ToList();
+						else
+							_queriedUsers = _queriedUsers.OrderBy(OrderFunc).ToList();
+					}
+					else
+						_queriedUsers = _queriedUsers.OrderBy(OrderFunc).ToList();
+				}
+			}
+			UpdateCollection();
 		}
 
 		public void UpdateCollection()
 		{
-			UsersList.ItemsSource = _queriedUsers
+			_selectedUsers = _queriedUsers
 				.Where(u =>
-				(SeachTextBox.Text == string.Empty ? 
-					true : 
-					u.Username.Contains(SeachTextBox.Text)) &&
-				(((ComboBoxItem)FilterCombo.SelectedItem).Tag.ToString() == "C" ?
-					u.Role == "C" :
-					true) &&
-				(((ComboBoxItem)FilterCombo.SelectedItem).Tag.ToString() == "D" ?
-					u.Role == "D" :
-					true) &&
-				(((ComboBoxItem)FilterCombo.SelectedItem).Tag.ToString() == "L" ?
-					u.Role == "L" :
-					true) &&
-				(((ComboBoxItem)FilterCombo.SelectedItem).Tag.ToString() == "U" ?
-					u.Role == "U" :
-					true)
-				/*add more for filter*/
-				)
+					(SeachTextBox.Text == string.Empty ?
+						true :
+						u.Username.Contains(SeachTextBox.Text)) &&
+					(((ComboBoxItem)FilterCombo.SelectedItem).Tag.ToString() == "C" ?
+						u.Role == "C" :
+						true) &&
+					(((ComboBoxItem)FilterCombo.SelectedItem).Tag.ToString() == "D" ?
+						u.Role == "D" :
+						true) &&
+					(((ComboBoxItem)FilterCombo.SelectedItem).Tag.ToString() == "L" ?
+						u.Role == "L" :
+						true) &&
+					(((ComboBoxItem)FilterCombo.SelectedItem).Tag.ToString() == "U" ?
+						u.Role == "U" :
+						true))
 				.Skip((_paginator.PageNumber - 1) * _paginator.PageSize)
-				.Take(_paginator.PageSize);
+				.Take(_paginator.PageSize)
+				.ToList();
+			UsersList.ItemsSource = _selectedUsers;
 		}
 	}
 }

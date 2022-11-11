@@ -31,17 +31,17 @@
 				<ComboBoxItem Tag="L" Content="Team Leads"/>
 				<ComboBoxItem Tag="U" Content="Unassigned"/>
 			</ComboBox>
-			<ComboBox Grid.Column="2" SelectionChanged="SortCombo_SelectionChanged">
+			<ComboBox x:Name="SortCombo" Grid.Column="2" SelectionChanged="SortCombo_SelectionChanged">
 				<ComboBoxItem Tag="N" Content="Sort" IsSelected="True"/>
 				<ComboBoxItem Tag="IA" Content="Id Asc"/>
 				<ComboBoxItem Tag="ID" Content="Id Dsc"/>
 				<ComboBoxItem Tag="RA" Content="Role Asc"/>
 				<ComboBoxItem Tag="RD" Content="Role Dsc"/>
 				<ComboBoxItem Tag="FA" Content="First name Asc"/>
-				<ComboBoxItem Tag="FD" Content="First name Asc"/>
-				<ComboBoxItem Tag="LA" Content="Last name Dsc"/>
+				<ComboBoxItem Tag="FD" Content="First name Dsc"/>
+				<ComboBoxItem Tag="LA" Content="Last name Asc"/>
 				<ComboBoxItem Tag="LD" Content="Last name Dsc"/>
-				<ComboBoxItem Tag="UA" Content="Username Dsc"/>
+				<ComboBoxItem Tag="UA" Content="Username Asc"/>
 				<ComboBoxItem Tag="UD" Content="Username Dsc"/>
 			</ComboBox>
 			<Button Content="Refresh" Grid.Column="3" Click="RefreshButton_Click"/>
@@ -51,8 +51,9 @@
 
 		<StackPanel Grid.Row="1" Orientation="Horizontal">
 			<Label Width="50" Content="Id"/>
-			<Label Width="200" Content="First Name"/>
-			<Label Width="200" Content="Username"/>
+			<Label Width="150" Content="First Name"/>
+			<Label Width="150" Content="Last Name"/>
+			<Label Width="150" Content="Username"/>
 			<Label Width="100" Content="Role"/>
 		</StackPanel>
 		<ListView x:Name="UsersList" Grid.Row="2" >
@@ -60,8 +61,9 @@
 				<DataTemplate DataType="User">
 					<StackPanel Orientation="Horizontal">
 						<Label Width="50" Content="{Binding Path=Id}"/>
-						<Label Width="200" Content="{Binding Path=FirstName}"/>
-						<Label Width="200" Content="{Binding Path=Username}"/>
+						<Label Width="150" Content="{Binding Path=FirstName}"/>
+						<Label Width="150" Content="{Binding Path=LastName}"/>
+						<Label Width="150" Content="{Binding Path=Username}"/>
 						<Label Width="100" Content="{Binding Path=TextRole}"/>
 						<Button Width="50" Content="More" Click="OpenMoreInfoButton_Click"/>
 					</StackPanel>
